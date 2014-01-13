@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiRecipeIGE extends GuiContainer
-{
+{	
 	public GuiRecipeIGE(EntityPlayer player)
 	{
 		super(new ContainerRecipeIGE(player));
@@ -14,9 +14,11 @@ public class GuiRecipeIGE extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j)
 	{
+		int k = (this.width - this.xSize) / 2;
+		int l = (this.height - this.ySize) / 2;
 		this.mc.getTextureManager().bindTexture(new ResourceLocation("recipeige", "textures/gui/recipeGUI.png"));
 
 		//TODO make this dynamic
-		this.drawTexturedModalRect(this.xSize / 2 + 10, this.ySize / 2 - 55, 200, 200, 200, 180);
+		this.drawTexturedModalRect(k - 20, l - 5, 0, 0, this.xSize + 80, this.ySize + 68);
 	}
 }

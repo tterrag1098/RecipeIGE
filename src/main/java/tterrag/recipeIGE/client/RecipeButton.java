@@ -3,11 +3,13 @@ package tterrag.recipeIGE.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import tterrag.recipeIGE.lib.Reference;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class RecipeButton extends GuiButton
 {
@@ -46,11 +48,17 @@ public class RecipeButton extends GuiButton
 	}
 
 	@Override
-	public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3)
+	public boolean mousePressed(Minecraft minecraft, int par2, int par3)
 	{
-		this.enabled = !super.mousePressed(par1Minecraft, par2, par3);
+		this.enabled = !super.mousePressed(minecraft, par2, par3);
 		if (!this.enabled)
-			FMLClientHandler.instance().showGuiScreen(new GuiRecipeIGE(par1Minecraft.thePlayer));
+		{
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			packet.length = 1;
+			packet.data = new byte[] { 0 };
+			packet.channel = Reference.CHANNEL;
+			PacketDispatcher.sendPacketToServer(packet);
+		}
 		return !this.enabled;
 	}
 }

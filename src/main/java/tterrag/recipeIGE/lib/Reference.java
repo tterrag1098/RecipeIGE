@@ -11,5 +11,6 @@ public class Reference
 	
 	public static final String TAB_NAME = "recipeIGE";
 	public static final String TAB_LOC_NAME = "Recipe IGE";
+	public static final String CHANNEL = "recipeIGE";
 }
 

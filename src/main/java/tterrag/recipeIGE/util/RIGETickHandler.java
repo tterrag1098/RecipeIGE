@@ -26,7 +26,8 @@ public class RIGETickHandler implements IScheduledTickHandler
 			List<GuiButton> buttons = ObfuscationReflectionHelper.<List<GuiButton>, GuiScreen> getPrivateValue(GuiScreen.class, Minecraft.getMinecraft().currentScreen, "buttonList", "field_73887_h");
 			if (buttons.size() > 2)
 				buttons.remove(2);
-			buttons.add(new RecipeButton((Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_73887_h"), (Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_73887_h")));
+			buttons.add(new RecipeButton((Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_73887_h"), (Integer) ObfuscationReflectionHelper
+					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_73887_h")));
 		}
 	}
 
@@ -34,7 +35,7 @@ public class RIGETickHandler implements IScheduledTickHandler
 	public void tickEnd(EnumSet<TickType> type, Object... tickData)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

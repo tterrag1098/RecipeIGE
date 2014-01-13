@@ -13,14 +13,14 @@ import net.minecraft.item.crafting.CraftingManager;
 public class ContainerRecipeIGE extends Container
 {
 	public ItemStack[] inventory;
-	
+
 	private InventoryRecipeIGE craftMatrix;
 	private InventoryRecipeIGE.InventoryRecipeIGEResult craftResult;
 
 	public ContainerRecipeIGE(EntityPlayer player)
 	{
 		inventory = new ItemStack[10];
-		
+
 		craftMatrix = new InventoryRecipeIGE(this, 3, 3);
 		craftResult = craftMatrix.new InventoryRecipeIGEResult(this);
 
@@ -36,10 +36,10 @@ public class ContainerRecipeIGE extends Container
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				this.addSlotToContainer(new Slot(craftMatrix, j + i * 3, j * 18 + 10, i * 18 + 12));
+				this.addSlotToContainer(new Slot(craftMatrix, j + i * 3, j * 18 - 8, i * 18 + 12));
 			}
 		}
-		this.addSlotToContainer(new Slot(craftResult, 45, 74, 12));
+		this.addSlotToContainer(new Slot(craftResult, 45, 56, 12));
 	}
 
 	public void bindPlayerInventory(InventoryPlayer inv)
@@ -65,10 +65,10 @@ public class ContainerRecipeIGE extends Container
 	{
 		return true;
 	}
-	
+
 	@Override
 	public void onCraftMatrixChanged(IInventory par1iInventory)
-	{	
+	{
 		this.craftResult.setInventorySlotContents(45, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, Minecraft.getMinecraft().theWorld));
 	}
 }

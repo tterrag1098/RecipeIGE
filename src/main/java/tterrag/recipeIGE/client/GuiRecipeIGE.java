@@ -70,6 +70,14 @@ public class GuiRecipeIGE extends GuiContainer
 		}
 	}
 
+	
+	/**
+	 * Adds recipe to the registry, based on an array of ItemStacks
+	 * @param input
+	 * - Array of itemstacks (crafting matrix)
+	 * @param output
+	 * - Output of the recipe
+	 */
 	private void addRecipe(ItemStack[] input, ItemStack output)
 	{
 		Map<String, Character> charToItemMap = new HashMap<String, Character>();
@@ -114,6 +122,11 @@ public class GuiRecipeIGE extends GuiContainer
 		GameRegistry.addRecipe(output, recipe);
 	}
 
+	/**
+	 * Removes duplicate chars from an array, preserving the order
+	 * @param recipeChars - the array to process
+	 * @return an array of chars, all unique
+	 */
 	private char[] getDifferentChars(char[] recipeChars)
 	{
 		ArrayList<Character> foundChars = new ArrayList<Character>();
@@ -133,6 +146,12 @@ public class GuiRecipeIGE extends GuiContainer
 		return finalChars;
 	}
 
+	/**
+	 * Makes sure the passed item is not equal to any item in the array
+	 * @param item - ItemStack to check equality with
+	 * @param differentItems - Array of ItemStacks to compare to
+	 * @return whether item is not equal to any itemstack in differentItems
+	 */
 	private boolean notEqualToAny(ItemStack item, ItemStack[] differentItems)
 	{
 		for (int i = 0; i < 9; i++)
@@ -144,12 +163,19 @@ public class GuiRecipeIGE extends GuiContainer
 		return true;
 	}
 	
+	/**
+	 * Gets the character associated with this ItemStack in the recipe
+	 * @param stack - ItemStack to find the character for
+	 * @param map - HashMap object to search in
+	 * @return the character associated
+	 */
 	private char getChar(ItemStack stack, Map<String, Character> map)
 	{
 		if (stack == null) return ' ';
 		return map.get(stack.itemID + "##" + stack.getItemDamage());
 	}
 	
+	//Unused as of yet
 	@SuppressWarnings("unused")
 	private String toStackString (ItemStack stack)
 	{

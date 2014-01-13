@@ -26,7 +26,7 @@ public class RIGETickHandler implements IScheduledTickHandler
 			List<GuiButton> buttons = ObfuscationReflectionHelper.<List<GuiButton>, GuiScreen> getPrivateValue(GuiScreen.class, Minecraft.getMinecraft().currentScreen, "buttonList", "field_73887_h");
 			if (buttons.size() > 2)
 				buttons.remove(2);
-			buttons.add(new RecipeButton((Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_73887_h"), (Integer) ObfuscationReflectionHelper
+			buttons.add(new RecipeButton((Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_74198_m"), (Integer) ObfuscationReflectionHelper
 					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_73887_h")));
 		}
 	}

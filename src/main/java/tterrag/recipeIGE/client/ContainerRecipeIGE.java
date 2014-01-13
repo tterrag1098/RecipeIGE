@@ -15,7 +15,7 @@ public class ContainerRecipeIGE extends Container
 	public ItemStack[] inventory = new ItemStack[10];
 
 	public InventoryRecipeIGE craftMatrix;
-	private InventoryRecipeIGE.InventoryRecipeIGEResult craftResult;
+	public InventoryRecipeIGE.InventoryRecipeIGEResult craftResult;
 
 	public ContainerRecipeIGE(EntityPlayer player)
 	{

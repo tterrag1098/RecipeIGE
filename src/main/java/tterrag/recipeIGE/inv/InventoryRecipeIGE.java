@@ -75,7 +75,7 @@ public class InventoryRecipeIGE extends InventoryCrafting
 						{
 							if (i < input.length && input[i] != null)
 							{
-								input[i].stackSize++;
+								input[i].stackSize = 1;
 								container.craftMatrix.setInventorySlotContents(i, input[i]);
 							}
 						}

@@ -80,12 +80,15 @@ public class GuiRecipeIGE extends GuiContainer
 	 */
 	private void addRecipe(ItemStack[] input, ItemStack output)
 	{
+		if (output == null)
+			return;
+		
 		Map<String, Character> charToItemMap = new HashMap<String, Character>();
 		ItemStack[] differentItems = new ItemStack[9];
 		int idx = 0;
 		for (ItemStack i : input)
 		{	
-			if (notEqualToAny(i, differentItems))
+			if (notEqualToAny(i, differentItems) && i != null)
 			{
 				charToItemMap.put(i.itemID + "##" + i.getItemDamage(), chars[idx]);
 				differentItems[idx] = i;
@@ -97,7 +100,7 @@ public class GuiRecipeIGE extends GuiContainer
 		
 		int numItems = charToItemMap.size();
 		
-		Object[] recipe = new Object[3 + numItems * 2];
+		Object[] recipe = new Object[3 + (numItems == 0 ? 1 : numItems) * 2];
 		String s1 = "" + getChar(input[0], charToItemMap) + getChar(input[1], charToItemMap) + getChar(input[2], charToItemMap);
 		String s2 = "" + getChar(input[3], charToItemMap) + getChar(input[4], charToItemMap) + getChar(input[5], charToItemMap);
 		String s3 = "" + getChar(input[6], charToItemMap) + getChar(input[7], charToItemMap) + getChar(input[8], charToItemMap);
@@ -118,8 +121,19 @@ public class GuiRecipeIGE extends GuiContainer
 			idx++;
 		}
 		
+		if (anyIsNull(recipe))
+			return;
+		
 		System.out.println(Arrays.deepToString(recipe));
 		GameRegistry.addRecipe(output, recipe);
+	}
+
+	private boolean anyIsNull(Object[] recipe)
+	{
+		for (Object o : recipe)
+			if (o == null)
+				return true;
+		return false;
 	}
 
 	/**
@@ -156,7 +170,7 @@ public class GuiRecipeIGE extends GuiContainer
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			if (differentItems[i] != null && item.getItem() == differentItems[i].getItem())
+			if (differentItems[i] != null && item != null && item.getItem() == differentItems[i].getItem())
 				return false;
 		}
 		

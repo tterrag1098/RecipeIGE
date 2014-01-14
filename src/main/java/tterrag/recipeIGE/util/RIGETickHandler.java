@@ -27,15 +27,14 @@ public class RIGETickHandler implements IScheduledTickHandler
 			if (buttons.size() > 2)
 				buttons.remove(2);
 			buttons.add(new RecipeButton((Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_74198_m"), (Integer) ObfuscationReflectionHelper
-					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_73887_h")));
+					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_74198_n")));
 		}
 	}
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData)
 	{
-		// TODO Auto-generated method stub
-
+		// Do Nothing
 	}
 
 	@Override

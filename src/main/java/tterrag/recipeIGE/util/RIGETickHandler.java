@@ -27,7 +27,7 @@ public class RIGETickHandler implements IScheduledTickHandler
 			if (buttons.size() > 2)
 				buttons.remove(2);
 			buttons.add(new SmallButton(10, 0, (Integer) ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gui, "guiLeft", "field_74198_m"), (Integer) ObfuscationReflectionHelper
-					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_74198_n")));
+					.getPrivateValue(GuiContainer.class, gui, "guiTop", "field_74197_n")));
 		}
 	}
 

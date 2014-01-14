@@ -48,7 +48,7 @@ public class GuiRecipeIGE extends GuiContainer
 		int l = (this.height - this.ySize) / 2;
 
 		this.buttonList.add(new GuiButton(0, k + 80, l + 5, 70, 20, "Add Recipe"));
-		this.buttonList.add(new GuiButton(1, k + 80, l + 28, 70, 20, "Remove"));
+		this.buttonList.add(new GuiButton(1, k + 80, l + 28, 70, 20, "Del Recipe"));
 		this.buttonList.add(new GuiButton(2, k + 80, l + 51, 70, 20, "Next Recipe"));
 
 		this.buttonList.add(new SmallButton(4, 2, k + 65, l + 64));
@@ -261,9 +261,9 @@ public class GuiRecipeIGE extends GuiContainer
 	{
 		ItemStack[] stacks1 = new ItemStack[9];
 		if (recipe instanceof ShapedRecipes)
-			stacks1 = ((ShapedRecipes) recipe).recipeItems;
+			ArrayUtils.addAll(stacks1, ((ShapedRecipes) recipe).recipeItems);
 		else if (recipe instanceof ShapelessRecipes)
-			stacks1 = (ItemStack[]) ((ShapelessRecipes) recipe).recipeItems.toArray(new ItemStack[] {});
+			ArrayUtils.addAll(stacks1, (ItemStack[]) ((ShapelessRecipes) recipe).recipeItems.toArray(new ItemStack[] {}));
 		else if (recipe instanceof ShapedOreRecipe)
 		{
 			int idx = 0;

@@ -141,4 +141,12 @@ public class InventoryRecipeIGE extends InventoryCrafting
 		
 		return stacks;
 	}
+
+	public void removeAll()
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			this.setInventorySlotContents(i, null);
+		}
+	}
 }

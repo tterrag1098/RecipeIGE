@@ -3,6 +3,7 @@ package tterrag.recipeIGE;
 import tterrag.recipeIGE.lib.Reference;
 import tterrag.recipeIGE.proxy.CommonProxy;
 import tterrag.recipeIGE.proxy.PacketHandler;
+import tterrag.recipeIGE.util.NBTFileWriter;
 import tterrag.recipeIGE.util.RIGETickHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -31,7 +32,7 @@ public class RecipeIGE
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		// ConfigHandler.init(event.getSuggestedConfigurationFile());
+		NBTFileWriter.init(event.getSuggestedConfigurationFile());
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 	}
 

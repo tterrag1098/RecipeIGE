@@ -1,5 +1,6 @@
 package tterrag.recipeIGE.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,11 +16,16 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import tterrag.recipeIGE.util.NBTFileWriter;
+import tterrag.recipeIGE.util.NBTFileWriter.RecipeTypes;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class GuiRecipeIGE extends GuiContainer
@@ -28,6 +34,8 @@ public class GuiRecipeIGE extends GuiContainer
 	private EntityPlayer player;
 	private ContainerRecipeIGE container;
 	private char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' };
+	//private RecipeTypes currentType = RecipeTypes.Shaped;
+	private ItemStack[] currentInput;
 
 	public GuiRecipeIGE(EntityPlayer player)
 	{
@@ -94,7 +102,7 @@ public class GuiRecipeIGE extends GuiContainer
 	 *            - Output of the recipe
 	 */
 	private void addRecipe(ItemStack[] input, ItemStack output)
-	{
+	{		
 		if (output == null)
 			return;
 
@@ -141,6 +149,15 @@ public class GuiRecipeIGE extends GuiContainer
 
 		System.out.println(Arrays.deepToString(recipe));
 		GameRegistry.addRecipe(output, recipe);
+		
+		try
+		{
+			NBTFileWriter.writeRecipeAddition(output.writeToNBT(new NBTTagCompound()), RecipeTypes.Shaped);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	private boolean anyIsNull(Object[] recipe)
@@ -241,6 +258,7 @@ public class GuiRecipeIGE extends GuiContainer
 				if (recipeEquals(recipe, container.craftMatrix.getStacks()))
 				{
 					recipes.remove();
+					addRemovalToFile(recipe, getEnumRecipeType(recipe));
 				}
 			}
 		}
@@ -296,7 +314,64 @@ public class GuiRecipeIGE extends GuiContainer
 					.getItemDamage())))
 				foundNotEquals = true;
 		}
-
+		
+		if (!foundNotEquals)
+		{
+			this.currentInput = stacks1;
+		}
+		
 		return !foundNotEquals;
+	}
+	
+	public void addRemovalToFile(IRecipe recipe, RecipeTypes r)
+	{
+		switch(r)
+		{
+		case Shaped:
+			ShapedRecipes shaped = (ShapedRecipes) recipe;
+			NBTTagList tags = new NBTTagList();
+			tags.appendTag(shaped.getRecipeOutput().writeToNBT(new NBTTagCompound("item")));
+			NBTTagList input = new NBTTagList();
+			for (ItemStack s : currentInput)
+			{
+				input.appendTag(s.writeToNBT(new NBTTagCompound()));
+			}
+			tags.appendTag(input);
+			
+			try
+			{
+				NBTFileWriter.writeRecipeDeletion(tags, r);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return;
+		case Shapeless:
+		case OreShaped:
+		case OreShapeless:
+		default:
+		}
+	}
+	
+	/** Util Methods **/
+	
+	/**
+	 * Gets the enum representing the instance of this recipe
+	 * @param recipe - the recipe to analyze
+	 * @return a RecipeTypes enum value
+	 */
+	public RecipeTypes getEnumRecipeType(IRecipe recipe)
+	{
+		if (recipe instanceof ShapedRecipes)
+			return RecipeTypes.Shaped;
+		else if (recipe instanceof ShapelessRecipes)
+			return RecipeTypes.Shapeless;
+		else if (recipe instanceof ShapedOreRecipe)
+			return RecipeTypes.OreShaped;
+		else if (recipe instanceof ShapelessOreRecipe)
+			return RecipeTypes.OreShapeless;
+		else
+			return null;
 	}
 }
